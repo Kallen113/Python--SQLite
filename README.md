@@ -3,9 +3,11 @@ Uses SQLite library to create a database, create a table, add new variables (col
 
 
 import sqlite3
+
 #imports sqlite module
 
 import os
+
 #imports and displays name of os (i.e., op. system)
 
 cwd = os.getcwd()
@@ -17,12 +19,13 @@ print(cwd)
 os.chdir("C:\\Users\\Owner\\Documents")
 #CHANGES current working directory to folder entitled Documents.
 
-conn = sqlite3.connect('Demography.db');
+conn = sqlite3.connect('Demography.db')
+
 '''connects Python to a database file.'''
 
-c = conn.cursor();
+c = conn.cursor()
 
-c.execute("CREATE TABLE IF NOT EXISTS demographic(country TEXT, LifeExpectancy REAL, Population REAL, Year REAL)");
+c.execute("CREATE TABLE IF NOT EXISTS demographic(country TEXT, LifeExpectancy REAL, Population REAL, Year REAL)")
 
 '''Creates a new table--caled Table 1--with 4 columns 
 in the connected database.'''
@@ -34,8 +37,8 @@ and REAL (similar to Python's float data type).'''
 however many times one wishes, allowing one to create
 new tables, again and again.'''
 
-c.execute("INSERT INTO demographic VALUES('Canada', 82.14, 35985000, 2015)" );
-conn.commit();
+c.execute("INSERT INTO demographic VALUES('Canada', 82.14, 35985000, 2015)" )
+conn.commit()
     
 '''Inserts data entries for Canada into the demographic table 
     contained within the demography database file.'''
@@ -87,7 +90,7 @@ c.close()
 conn.close()
 
 '''For now, I'm done with inserting new rows of data. 
-Now. onto some other SQL commands and code...'''
+Now, onto some other SQL commands and code...'''
 
 SELECT * FROM demographic
 '''Selects ALL data from each row, from the demographic table.'''
@@ -122,6 +125,7 @@ simultaneously. Use an "AND" command in the SELECT...WHERE
 statement:'''
 
 SELECT * FROM demographic WHERE population>30000000 AND LifeExpectancy>80
+
 '''Selects data from rows of data in which a country has a
 population higher than 30 million and also a life expectancy 
 higher than 80.'''
@@ -129,6 +133,7 @@ higher than 80.'''
 #What about doing a query with 2 or more criteria, but it can be either? Use the OR command:
 
 SELECT * FROM demographic WHERE population>30000000 OR LifeExpectancy>80
+
 '''Selects data from rows in which a country has a population
 exceeding 30 million or has a life expectancy higher than 80.'''
 
