@@ -1,3 +1,4 @@
+
 import sqlite3
 
 #imports sqlite module
@@ -6,18 +7,18 @@ import os
 
 #imports and displays name of os (i.e., op. system)
 
-cwd = os.getcwd() #retrives current working directory
+cwd = os.getcwd() #retrieves current working directory
 
 print(cwd) #displays current working directory
 
-os.chdir("C:\Users\Owner\Documents") #CHANGES current working directory to folder entitled Documents.
+os.chdir("C:\Users\Owner\Documents") #Changes current working directory to computer's folder entitled Documents.
 
+#connect Python to a database file
 conn = sqlite3.connect('Demography.db')
-
-'''connects Python to a database file.'''
 
 c = conn.cursor()
 
+#Create new table within database if the table does not currently exist:
 c.execute("CREATE TABLE IF NOT EXISTS demographic(country TEXT, LifeExpectancy REAL, Population REAL, Year REAL)")
 
 '''Creates a new table--caled Table 1--with 4 columns in the connected database.'''
@@ -54,25 +55,31 @@ c.execute("INSERT INTO demographic VALUES('Israel', 82.05, 8380000, 2015)" ) con
 
 c.execute("INSERT INTO demographic VALUES('China', 75.99, 1371000000, 2015)" ) conn.commit() c.close() conn.close()
 
-'''For now, I'm done with inserting new rows of data. Now, onto some other SQL commands and code...'''
+'''For now, let's say we're done with inserting new rows of data. Now, onto some other SQL commands and code:
+'''
 
-SELECT * FROM demographic '''Selects ALL data from each row, from the demographic table.'''
+SELECT * FROM demographic 
+#Selects ALL data from each row, from the demographic table.
 
-SELECT * FROM demographic WHERE LifeExpectancy>77 '''Selects each row of data for which a country's life expectancy exceeds 77.'''
+SELECT * FROM demographic WHERE LifeExpectancy>77 
+#Selects each row of data for which a country's life expectancy exceeds 77
 
-SELECT * FROM demographic WHERE country = 'Japan' '''Selects all columns of data for the Japan data/row.'''
+SELECT * FROM demographic WHERE country = 'Japan' 
+#Selects all columns of data for the Japan data/row.
 
-SELECT * FROM demographic WHERE population<=60000000 '''Selects data for rows in which population is less than or equal to 60 million.'''
+SELECT * FROM demographic WHERE population<=60000000 
+#Selects data for rows in which population is less than or equal to 60 million
 
 SELECT * FROM demographic WHERE population BETWEEN 60000000 and 350000000
 
 '''Selects data for rows in which the population ranges from 60 million to 350 million.'''
 
-'''New scenario: Say an existing row of data needed to be changed due to a typing error or a revision in the data from the data source. How does one make this change using SQL? See below:'''
+'''New scenario: Say an existing row of data needed to be changed due to a typing error 
+or a revision in the data from the data source. How does one make this change using SQL? See below:'''
 
+#update one of the rows of data
 UPDATE demographic SET LifeExpectancy= 82.14 WHERE population = 35985000
-
-'''Adjusts the LifeExpectancy column for the Canada row to be 82.14 (note: the data are not changed, code is merely shown here for illustrative purpose). Notice the UPDATE command is used to make changes to existing columns and rows of data.'''
+#Adjusts the LifeExpectancy column for the Canada row to be 82.14 (note: the data are not changed, code is merely shown here for illustrative purpose). 
 
 '''Also, what about getting a query involving two criteria simultaneously. Use an "AND" command in the SELECT...WHERE statement:'''
 
@@ -82,10 +89,17 @@ SELECT * FROM demographic WHERE population>30000000 AND LifeExpectancy>80
 
 #What about doing a query with 2 or more criteria, but it can be either? Use the OR command:
 
+#Select data from rows in which a country has a population exceeding 30 million or has a life expectancy higher than 80:
 SELECT * FROM demographic WHERE population>30000000 OR LifeExpectancy>80
 
-'''Selects data from rows in which a country has a population exceeding 30 million or has a life expectancy higher than 80.'''
 
-'''Now, for code on how to use Python directly to use queries for a database:'''
+# Delete one or more rows of data:
+#In next line of code, delete data for countries whose population is less than 100 million:
+DELETE * FROM demographic WHRE population < 100000000
 
-con = sqlite3.connect cur=con.cursor() cur.execute('SELECT* FROM demographic') for record in cur: print(record) #prints all rows of data in the table demographic.
+'''Now, for code on how to use Python directly to use queries for a database.
+The following code will print out the ouput from a SELECT query
+:'''
+
+#print all rows of data in the table demographic.
+con = sqlite3.connect cur=con.cursor() cur.execute('SELECT* FROM demographic') for record in cur: print(record) 
